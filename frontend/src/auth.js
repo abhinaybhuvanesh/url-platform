@@ -1,5 +1,3 @@
-// auth.js — simple helpers for storing/reading the JWT token
-
 export function saveToken(token) {
   localStorage.setItem('token', token);
 }
@@ -13,5 +11,5 @@ export function clearToken() {
 }
 
 export function isLoggedIn() {
-  return !!getToken(); // true if a token exists
+  return !!getToken(); 
 }

@@ -48,7 +48,6 @@ function Home() {
         const qrResponse = await axios.get(`${API_BASE_URL}/api/urls/${response.data.shortCode}/qrcode`);
         setQrCode(qrResponse.data.qrCode);
       } catch (qrErr) {
-        // QR fetch failing shouldn't block showing the short URL
       }
 
       setLongUrl('');

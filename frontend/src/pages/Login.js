@@ -12,12 +12,10 @@ function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
-
     if (!email.includes('@') || !email.includes('.')) {
       setError('Please enter a valid email address');
       return;
     }
-
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
       saveToken(response.data.token);

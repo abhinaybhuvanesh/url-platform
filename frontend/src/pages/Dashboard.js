@@ -33,11 +33,8 @@ function Dashboard() {
   function copyToClipboard(shortCode) {
     navigator.clipboard.writeText(`${API_BASE_URL}/${shortCode}`);
   }
-
   if (loading) return <p>Loading your links...</p>;
-
   const totalClicks = links.reduce((sum, link) => sum + link.clickCount, 0);
-
   return (
     <div className="page-container wide">
       <h2>My Links</h2>
