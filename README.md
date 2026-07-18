@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="frontend/public/favicon.png" alt="SwiftByte Logo" width="110" />
-
 # SwiftByte
 
 ### Full-Stack URL Shortening and Analytics Platform
@@ -178,49 +176,6 @@ Using a cache-aside strategy keeps frequently accessed redirects fast and reduce
 | `GET` | `/api/urls/:shortCode/qrcode` | Generate or retrieve a QR code | No |
 | `GET` | `/api/urls/my-links` | Retrieve links owned by the current user | Yes |
 
----
-
-## Project Structure
-
-```text
-url-platform/
-│
-├── backend/
-│   ├── index.js
-│   ├── package.json
-│   │
-│   └── src/
-│       ├── config/
-│       │   ├── db.js
-│       │   └── redis.js
-│       │
-│       ├── middleware/
-│       │   ├── auth.js
-│       │   ├── errorHandler.js
-│       │   └── rateLimiter.js
-│       │
-│       ├── models/
-│       │   ├── User.js
-│       │   └── Url.js
-│       │
-│       ├── routes/
-│       │   ├── auth.routes.js
-│       │   └── url.routes.js
-│       │
-│       └── utils/
-│           └── logger.js
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   ├── package.json
-│   └── build/
-│
-├── .gitignore
-└── README.md
-```
-
----
 
 ## Local Development
 
@@ -439,8 +394,8 @@ This project demonstrates experience with:
 
 ### Abhinay Bhuvanesh Thota
 
-[![GitHub](https://img.shields.io/badge/GitHub-abhinaybhuvanesh-181717?style=for-the-badge&logo=github)](https://github.com/abhinaybhuvanesh)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abhinay_Bhuvanesh-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME)
+[![GitHub](https://img.shields.io/badge/GitHub-abhinay_bhuvanesh-181717?style=for-the-badge&logo=github)](https://github.com/abhinaybhuvanesh)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abhinay_Bhuvanesh-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/abhinaybhuvanesh/)
 
 ---
 
