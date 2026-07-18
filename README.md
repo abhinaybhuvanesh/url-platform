@@ -44,3 +44,23 @@ Rather than relying on managed platforms like Vercel or Render, SwiftByte is **s
 ---
 
 ## 🏗️ System Architecture
+
+┌─────────────┐
+                 │  React SPA  │
+                 └──────┬──────┘
+                        │ Axios (REST)
+                 ┌──────▼──────┐
+                 │    Nginx    │  Reverse proxy · Static file serving
+                 └──────┬──────┘
+                        │
+                 ┌──────▼──────┐
+                 │  Express.js │  PM2-managed, auto-restart on failure
+                 │     API     │
+                 └──┬───────┬──┘
+                    │       │
+             ┌──────▼─┐   ┌─▼──────────┐
+             │  Redis │   │  MongoDB   │
+             │ Cache  │   │   Atlas    │
+             └────────┘   └────────────┘
+
+
