@@ -1,86 +1,307 @@
-This design keeps hot-path redirects fast under load without hammering the database on every single click — the same pattern production URL shorteners rely on at scale.
+<div align="center">
+
+# 🔗 SwiftByte
+
+### A Production-Grade URL Shortening & Analytics Platform
+
+*Engineered from scratch to demonstrate scalable backend architecture, authentication, caching, analytics, and cloud deployment.*
+
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4DB33D?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS_EC2-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
+
+</div>
 
 ---
 
-## 🧰 Technology Stack
+# 📖 Overview
 
-**Frontend**
-`React` · `React Router` · `Axios` · Custom CSS design system
+SwiftByte is a full-stack URL shortening platform inspired by Bitly, designed to showcase production-ready backend development and cloud deployment.
 
-**Backend**
-`Node.js` · `Express.js` · `MongoDB / Mongoose` · `Redis`
+The project focuses on building a scalable and secure URL management service featuring authentication, Redis caching, analytics, QR code generation, password-protected links, custom aliases, and AWS deployment.
 
-**Security & Middleware**
-`JWT` · `bcryptjs` · `rate-limiter-flexible` · `validator` · `winston`
-
-**Infrastructure**
-`AWS EC2 (Ubuntu)` · `Nginx` · `PM2` · Manually provisioned — no managed PaaS
+Unlike tutorial projects, SwiftByte was deployed manually on an AWS EC2 instance using Nginx and PM2, demonstrating real infrastructure setup and server management.
 
 ---
 
-## 📡 API Reference
+# ✨ Features
 
-| Method | Endpoint | Description | Auth |
-|:---|:---|:---|:---:|
-| `POST` | `/api/auth/register` | Create a new account | — |
-| `POST` | `/api/auth/login` | Authenticate, receive JWT | — |
-| `POST` | `/api/urls` | Create a short link (alias/password optional) | Optional |
-| `GET` | `/:shortCode` | Resolve and redirect | — |
-| `POST` | `/api/urls/:shortCode/unlock` | Verify password on protected links | — |
-| `GET` | `/api/urls/:shortCode/qrcode` | Retrieve QR code for a link | — |
-| `GET` | `/api/urls/my-links` | List links owned by the current user | ✅ |
+- 🔗 Shorten long URLs instantly
+- 👤 User Registration & Login (JWT Authentication)
+- 🔒 Password Protected Links
+- 🏷️ Custom Short URL Aliases
+- 📊 Click Analytics
+- 📱 QR Code Generation
+- ⚡ Redis Caching for Fast Redirects
+- 🛡️ Rate Limiting
+- ✅ URL Validation
+- 📝 Structured Logging using Winston
+- ☁️ AWS EC2 Deployment
+- 🚀 PM2 Process Management
+- 🌐 Nginx Reverse Proxy
 
 ---
 
-## 🚀 Local Development
+# 🏗️ System Architecture
 
-**Prerequisites:** Node.js 18+, Redis, a MongoDB connection (Atlas or local)
+```
+                 React Frontend
+                        │
+                        │
+                 Axios REST API
+                        │
+                        ▼
+                  Nginx Server
+                        │
+                        ▼
+                Express.js Backend
+                  │             │
+                  │             │
+             MongoDB Atlas   Redis
+             (Database)      (Cache)
+```
+
+---
+
+# ⚡ Redirect Flow
+
+```
+User
+  │
+  ▼
+Short URL Request
+  │
+  ▼
+Check Redis Cache
+  │
+  ├──────────────► Cache Hit
+  │                     │
+  │                     ▼
+  │               Instant Redirect
+  │
+  ▼
+Cache Miss
+  │
+  ▼
+MongoDB Lookup
+  │
+  ▼
+Store in Redis
+  │
+  ▼
+Redirect User
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+- React.js
+- React Router
+- Axios
+- CSS
+
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- MongoDB Atlas
+- Mongoose
+
+## Cache
+
+- Redis
+
+## Authentication
+
+- JWT
+- bcrypt
+
+## Security
+
+- Rate Limiting
+- Validator
+- Centralized Error Handling
+
+## Deployment
+
+- AWS EC2
+- Ubuntu Linux
+- PM2
+- Nginx
+
+---
+
+# 📡 REST API
+
+| Method | Endpoint | Description |
+|----------|-------------------------------|----------------------------|
+| POST | /api/auth/register | Register User |
+| POST | /api/auth/login | Login |
+| POST | /api/urls | Create Short URL |
+| GET | /:shortCode | Redirect URL |
+| POST | /api/urls/:code/unlock | Unlock Password URL |
+| GET | /api/urls/:code/qrcode | Generate QR |
+| GET | /api/urls/my-links | User Dashboard |
+
+---
+
+# 🚀 Installation
+
+## Clone Repository
 
 ```bash
-# Backend
+git clone https://github.com/abhinay-78/url-platform.git
+
+cd url-platform
+```
+
+---
+
+## Backend
+
+```bash
 cd backend
+
 npm install
-echo "MONGO_URI=your_connection_string
+```
+
+Create `.env`
+
+```env
+MONGO_URI=your_mongodb_uri
+
 JWT_SECRET=your_secret
-PORT=3000" > .env
+
+PORT=3000
+
+REDIS_HOST=localhost
+```
+
+Run
+
+```bash
 node index.js
 ```
 
+---
+
+## Frontend
+
 ```bash
-# Frontend
 cd frontend
+
 npm install
-echo "REACT_APP_API_URL=http://localhost:3000" > .env
+```
+
+Create `.env`
+
+```env
+REACT_APP_API_URL=http://localhost:3000
+```
+
+Run
+
+```bash
 npm start
 ```
 
 ---
 
-## ☁️ Deployment
+# ☁️ Deployment
 
-Provisioned manually on a single AWS EC2 (Ubuntu) instance:
+SwiftByte is manually deployed on an AWS EC2 Ubuntu instance.
 
-- **Nginx** — serves the compiled React build and handles routing
-- **PM2** — process supervision for the Node backend; auto-restarts on crash or system reboot
-- **MongoDB Atlas** — managed, network-restricted database layer
-- **Redis** — self-hosted on the instance for cache and rate-limit state
+Deployment stack includes:
 
-No containerization, no managed deployment platform — infrastructure was configured directly to demonstrate hands-on server administration.
+- AWS EC2
+- Ubuntu
+- Nginx
+- PM2
+- MongoDB Atlas
+- Redis
 
----
-
-## 🗺️ Roadmap
-
-- [ ] Link expiration policies
-- [ ] Analytics breakdown by device, browser, and geography
-- [ ] Custom domain + HTTPS via Let's Encrypt
-- [ ] Migrate client-side auth storage from `localStorage` to httpOnly cookies
+React is served as a production build through Nginx while the Express backend runs under PM2 for automatic process recovery.
 
 ---
 
-## 👤 Author
+# 📊 Project Highlights
+
+✔ Full-stack Architecture
+
+✔ JWT Authentication
+
+✔ Password Protected Links
+
+✔ Redis Cache Layer
+
+✔ QR Code Generation
+
+✔ Click Analytics
+
+✔ Custom Aliases
+
+✔ AWS Deployment
+
+✔ Nginx Configuration
+
+✔ PM2 Process Management
+
+✔ Production Ready Folder Structure
+
+---
+
+# 📈 Future Improvements
+
+- Link Expiration
+- Device Analytics
+- Browser Analytics
+- Country Analytics
+- Custom Domains
+- HTTPS using Let's Encrypt
+- Docker Deployment
+- Kubernetes Deployment
+- CI/CD using GitHub Actions
+
+---
+
+# 👨‍💻 Author
 
 **Abhinay Bhuvanesh**
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/abhinaybhuvanesh)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN)
+GitHub:
+https://github.com/abhinay-78
+
+LinkedIn:
+https://www.linkedin.com/in/YOUR-LINKEDIN
+
+---
+
+# ⭐ Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
+
+It helps others discover the project and motivates further development.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+### Thank you for visiting SwiftByte 🚀
+
+</div>
