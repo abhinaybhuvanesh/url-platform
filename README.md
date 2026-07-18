@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="frontend/public/favicon.png" alt="SwiftByte Logo" width="120"/>
-
 # SwiftByte
 
 ### 🚀 Enterprise URL Shortening Platform
