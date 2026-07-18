@@ -1,66 +1,86 @@
-<div align="center">
-
-# 🔗 SwiftByte
-
-### A Production-Grade URL Shortening & Analytics Platform
-
-*Engineered from the ground up — not a Bitly clone, a Bitly-inspired system built to demonstrate real backend architecture, caching strategy, and security practices.*
-
-[![Live Demo](https://img.shields.io/badge/demo-live-0d9488?style=for-the-badge)](http://40.192.24.115)
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
-[![AWS](https://img.shields.io/badge/AWS_EC2-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
-
-**[Live Demo](http://40.192.24.115)** · **[Report an Issue](https://github.com/abhinaybhuvanesh/url-platform/issues)**
-
-</div>
+This design keeps hot-path redirects fast under load without hammering the database on every single click — the same pattern production URL shorteners rely on at scale.
 
 ---
 
-## Overview
+## 🧰 Technology Stack
 
-SwiftByte is a full-stack link management platform built to explore and demonstrate the systems-level concerns that separate a toy project from a production service: **caching strategy, rate limiting, authentication, and self-managed deployment infrastructure.**
+**Frontend**
+`React` · `React Router` · `Axios` · Custom CSS design system
 
-Rather than relying on managed platforms like Vercel or Render, SwiftByte is **self-hosted end-to-end** on an AWS EC2 instance — configured manually with Nginx and PM2 — to demonstrate real infrastructure ownership, not just application code.
+**Backend**
+`Node.js` · `Express.js` · `MongoDB / Mongoose` · `Redis`
 
----
+**Security & Middleware**
+`JWT` · `bcryptjs` · `rate-limiter-flexible` · `validator` · `winston`
 
-## ✨ Key Capabilities
-
-| | |
-|---|---|
-| 🔐 **Secure Authentication** | JWT-based sessions, bcrypt password hashing, protected route middleware |
-| ⚡ **Cache-First Architecture** | Redis-backed redirect lookups — sub-millisecond response on repeat hits, MongoDB as source of truth |
-| 🛡️ **Abuse Protection** | Redis-backed sliding rate limiter on link creation, independent of authentication state |
-| 🏷️ **Custom Short Links** | User-defined aliases with uniqueness enforcement at the database layer |
-| 🔒 **Password-Gated Links** | Per-link bcrypt-hashed passwords, verified via a dedicated unlock endpoint |
-| 📊 **Ownership & Analytics** | Per-user dashboards with click tracking, aggregate stats, and link history |
-| 📱 **QR Code Generation** | Server-rendered QR codes for every shortened link |
-| 🧾 **Observability** | Structured Winston logging, centralized Express error-handling middleware |
-| 🌍 **Frictionless Access** | Anonymous shortening works instantly — authentication unlocks ownership, not core functionality |
+**Infrastructure**
+`AWS EC2 (Ubuntu)` · `Nginx` · `PM2` · Manually provisioned — no managed PaaS
 
 ---
 
-## 🏗️ System Architecture
+## 📡 API Reference
 
-┌─────────────┐
-                 │  React SPA  │
-                 └──────┬──────┘
-                        │ Axios (REST)
-                 ┌──────▼──────┐
-                 │    Nginx    │  Reverse proxy · Static file serving
-                 └──────┬──────┘
-                        │
-                 ┌──────▼──────┐
-                 │  Express.js │  PM2-managed, auto-restart on failure
-                 │     API     │
-                 └──┬───────┬──┘
-                    │       │
-             ┌──────▼─┐   ┌─▼──────────┐
-             │  Redis │   │  MongoDB   │
-             │ Cache  │   │   Atlas    │
-             └────────┘   └────────────┘
+| Method | Endpoint | Description | Auth |
+|:---|:---|:---|:---:|
+| `POST` | `/api/auth/register` | Create a new account | — |
+| `POST` | `/api/auth/login` | Authenticate, receive JWT | — |
+| `POST` | `/api/urls` | Create a short link (alias/password optional) | Optional |
+| `GET` | `/:shortCode` | Resolve and redirect | — |
+| `POST` | `/api/urls/:shortCode/unlock` | Verify password on protected links | — |
+| `GET` | `/api/urls/:shortCode/qrcode` | Retrieve QR code for a link | — |
+| `GET` | `/api/urls/my-links` | List links owned by the current user | ✅ |
 
+---
 
+## 🚀 Local Development
+
+**Prerequisites:** Node.js 18+, Redis, a MongoDB connection (Atlas or local)
+
+```bash
+# Backend
+cd backend
+npm install
+echo "MONGO_URI=your_connection_string
+JWT_SECRET=your_secret
+PORT=3000" > .env
+node index.js
+```
+
+```bash
+# Frontend
+cd frontend
+npm install
+echo "REACT_APP_API_URL=http://localhost:3000" > .env
+npm start
+```
+
+---
+
+## ☁️ Deployment
+
+Provisioned manually on a single AWS EC2 (Ubuntu) instance:
+
+- **Nginx** — serves the compiled React build and handles routing
+- **PM2** — process supervision for the Node backend; auto-restarts on crash or system reboot
+- **MongoDB Atlas** — managed, network-restricted database layer
+- **Redis** — self-hosted on the instance for cache and rate-limit state
+
+No containerization, no managed deployment platform — infrastructure was configured directly to demonstrate hands-on server administration.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Link expiration policies
+- [ ] Analytics breakdown by device, browser, and geography
+- [ ] Custom domain + HTTPS via Let's Encrypt
+- [ ] Migrate client-side auth storage from `localStorage` to httpOnly cookies
+
+---
+
+## 👤 Author
+
+**Abhinay Bhuvanesh**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/abhinaybhuvanesh)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN)
