@@ -9,7 +9,7 @@ async function connectDB() {
   throw new Error("MONGO_URI is missing");
 }
 
-await mongoose.connect(process.env.MONGO_URI);
+await mongoose.connect(process.env.MONGODB_URI);
 
   isConnected = true;
   console.log("MongoDB Connected");
