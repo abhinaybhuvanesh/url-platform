@@ -37,10 +37,12 @@ app.use(async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error('Startup error:', error);
-    res.status(500).json({
-      error: 'Database connection failed',
-    });
+  console.error(error);
+
+  return res.status(500).json({
+    error: error.message,
+    stack: error.stack,
+  });
   }
 });
 
