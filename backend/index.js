@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
 const validator = require('validator');
@@ -8,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const QRCode = require('qrcode');
 
 const connectDB = require('./src/config/db');
-const redis = require('./src/config/redis');
 
 const Url = require('./src/models/Url');
 const authRoutes = require('./src/routes/auth.routes');
@@ -23,6 +20,15 @@ app.use(
     credentials: true,
   })
 );
+app.get("/api/health", async (req, res) => {
+  res.json({
+    ok: true,
+    mongo: !!process.env.MONGODB_URI,
+    jwt: !!process.env.JWT_SECRET,
+    base: process.env.BASE_URL || null
+  });
+});
+
 
 app.use(express.json());
 app.use(async (req, res, next) => {
