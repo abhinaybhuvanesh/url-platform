@@ -16,7 +16,12 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || true,
+    origin: [
+      'https://swiftbyte-frontend.vercel.app',
+      'https://swiftbyte-abhinay7.vercel.app',
+      'http://localhost:3001',
+      'http://localhost:3000'
+    ],
     credentials: true,
   })
 );
