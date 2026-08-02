@@ -17,6 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: [
+      'https://swiftbyte-url.vercel.app',
       'https://swiftbyte-frontend.vercel.app',
       'https://swiftbyte-abhinay7.vercel.app',
       'http://localhost:3001',
