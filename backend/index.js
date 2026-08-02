@@ -35,10 +35,6 @@ app.use(async (req, res, next) => {
   try {
     await connectDB();
 
-    if (process.env.REDIS_URL) {
-      await redis.connectRedis();
-    }
-
     next();
   } catch (error) {
     console.error('Startup error:', error);
@@ -51,12 +47,6 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
   res.json({
     message: 'SwiftByte API is running',
-  });
-});
-
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'OK',
   });
 });
 
@@ -261,28 +251,7 @@ app.get('/:shortCode', async (req, res, next) => {
         `${frontendUrl}/verify/${shortCode}`
       );
     }
-
-    const redisClient = redis.redisClient;
-
-    if (redisClient?.isOpen) {
-      const cachedUrl = await redisClient.get(shortCode);
-
-      if (cachedUrl) {
-        await Url.updateOne(
-          { shortCode },
-          { $inc: { clickCount: 1 } }
-        );
-
-        return res.redirect(cachedUrl);
-      }
-
-      await redisClient.setEx(
-        shortCode,
-        3600,
-        foundUrl.longUrl
-      );
-    }
-
+    
     foundUrl.clickCount += 1;
     await foundUrl.save();
 
