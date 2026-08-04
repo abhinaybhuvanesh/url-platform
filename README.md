@@ -1,120 +1,161 @@
-<div align="center">
+#  SwiftByte – URL Shortening & Analytics Platform
 
-# 🚀 SwiftByte
+SwiftByte is a full-stack URL shortening platform that enables users to create secure, customizable, and shareable short URLs.
 
-### Full-Stack URL Shortening and Analytics Platform
+The platform provides user authentication, custom aliases, password-protected links, QR code generation, click analytics, and a personal dashboard for managing shortened URLs.
 
-A modern URL shortening platform with secure authentication, custom aliases, password-protected links, QR code generation, click analytics, and cloud deployment.
-
----
-
-# 🌐 Live Demo
-
-**Application**
-
-https://swiftbyte-url.vercel.app
+ **Live Demo:** https://swiftbyte-url.vercel.app/
 
 ---
 
-# 📌 Overview
+##  Features
 
-SwiftByte is a full-stack URL shortening platform built using **React.js, Node.js, Express.js, and MongoDB Atlas**.
-
-The platform allows users to shorten long URLs, create custom aliases, generate QR codes, secure links with passwords, manage their links through a dashboard, and monitor click analytics.
-
-The application is fully deployed on **Vercel**, while **MongoDB Atlas** is used for persistent cloud database storage.
-
----
-
-# ✨ Features
-
-- 🔗 URL Shortening
-- 👤 User Registration & Login
-- 🔐 JWT Authentication
-- 🔑 Password-Protected Links
-- ✏️ Custom URL Aliases
-- 📱 QR Code Generation
-- 📊 Click Analytics
-- 📂 Personal Dashboard
-- ✅ Input Validation
-- 🛡️ Password Hashing using bcrypt
-- ⚡ REST API Architecture
-- ☁️ Cloud Deployment on Vercel
+-  Shorten long URLs instantly
+-  User Registration & Login
+-  JWT-based Authentication
+-  Custom URL Aliases
+-  Password-Protected Links
+-  QR Code Generation
+-  Click Analytics
+-  Personal Dashboard
+-  URL Validation
+-  Responsive User Interface
 
 ---
 
-# 🏗️ System Architecture
+##  Tech Stack
 
-```
-React Frontend
-        │
-        ▼
- Vercel Frontend
-        │
- Axios REST API
-        │
-        ▼
-Express.js Backend
-      (Vercel)
-        │
-        ▼
-MongoDB Atlas
-```
-
----
-
-# 🛠️ Tech Stack
-
-## Frontend
-
+### Frontend
 - React.js
 - React Router
 - Axios
-- HTML
-- CSS
-- JavaScript
+- HTML5
+- CSS3
 
-## Backend
-
+### Backend
 - Node.js
 - Express.js
 - REST APIs
 
-## Database
-
+### Database
 - MongoDB Atlas
 - Mongoose
 
-## Authentication & Security
-
-- JSON Web Token (JWT)
+### Authentication & Security
+- JWT (JSON Web Token)
 - bcrypt
 - Input Validation
-- Password-Protected Links
 
-## Deployment
-
+### Deployment
 - Vercel
-- MongoDB Atlas
 - GitHub
 
 ---
 
-# 📡 REST API Endpoints
+## 🚀 Getting Started
 
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | /api/auth/register | Register User |
-| POST | /api/auth/login | Login User |
-| POST | /api/urls | Create Short URL |
-| GET | /:shortCode | Redirect to Original URL |
-| POST | /api/urls/:shortCode/unlock | Unlock Password Protected Link |
-| GET | /api/urls/:shortCode/qrcode | Generate QR Code |
-| GET | /api/urls/my-links | Retrieve User URLs |
+### Clone Repository
+
+```bash
+git clone https://github.com/abhinaybhuvanesh/url-platform.git
+```
+
+```bash
+cd url-platform
+```
 
 ---
 
-# 🔒 Security Features
+## Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=3000
+
+MONGODB_URI=YOUR_MONGODB_CONNECTION_STRING
+
+JWT_SECRET=YOUR_SECRET_KEY
+
+BASE_URL=http://localhost:3000
+
+FRONTEND_URL=http://localhost:3001
+```
+
+Run the backend:
+
+```bash
+node index.js
+```
+
+---
+
+## Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+REACT_APP_API_URL=http://localhost:3000
+```
+
+Run the frontend:
+
+```bash
+npm start
+```
+
+---
+
+## 📂 Project Structure
+
+```
+url-platform/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── utils/
+│   ├── index.js
+│   ├── package.json
+│   └── .env
+│
+└── README.md
+```
+
+---
+
+##  How It Works
+
+1. Register or Login.
+2. Paste a long URL.
+3. Optionally create a custom alias.
+4. Optionally protect the link with a password.
+5. Generate a shortened URL.
+6. Generate a QR code for easy sharing.
+7. Track clicks from the dashboard.
+8. Redirect users securely to the original URL.
+
+---
+
+##  Security Features
 
 - JWT Authentication
 - Password Hashing using bcrypt
@@ -124,189 +165,65 @@ MongoDB Atlas
 
 ---
 
-# 📊 Key Functionalities
+## 📡 REST API Endpoints
 
-### URL Shortening
-
-Convert long URLs into short and shareable links.
-
-### Custom Alias
-
-Create personalized short URLs.
-
-Example:
-
-```
-https://swiftbyte-url.vercel.app/github
-```
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/api/auth/register` | Register User |
+| POST | `/api/auth/login` | Login User |
+| POST | `/api/urls` | Create Short URL |
+| GET | `/:shortCode` | Redirect to Original URL |
+| POST | `/api/urls/:shortCode/unlock` | Unlock Password-Protected URL |
+| GET | `/api/urls/:shortCode/qrcode` | Generate QR Code |
+| GET | `/api/urls/my-links` | Retrieve User URLs |
 
 ---
 
-### Password Protection
+## Production Deployment
 
-Protect shortened URLs with a password.
-
----
-
-### QR Code
-
-Generate a QR code for every shortened URL.
-
----
-
-### Click Analytics
-
-Track the number of clicks for every shortened URL.
-
----
-
-### Dashboard
-
-Authenticated users can:
-
-- View all their URLs
-- Monitor click counts
-- Manage created links
-
----
-
-# ⚙️ Local Setup
-
-## Clone Repository
-
-```bash
-git clone https://github.com/abhinaybhuvanesh/url-platform.git
-
-cd url-platform
-```
-
----
-
-## Backend
-
-```bash
-cd backend
-
-npm install
-```
-
-Create `.env`
-
-```env
-PORT=3000
-
-MONGODB_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret
-
-BASE_URL=http://localhost:3000
-
-FRONTEND_URL=http://localhost:3001
-```
-
-Run backend
-
-```bash
-node index.js
-```
-
----
-
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-```
-
-Create `.env`
-
-```env
-REACT_APP_API_URL=http://localhost:3000
-```
-
-Run frontend
-
-```bash
-npm start
-```
-
----
-
-# 🚀 Production Deployment
-
-## Frontend
+### Frontend
 
 Vercel
 
 https://swiftbyte-url.vercel.app
 
----
-
-## Backend
+### Backend
 
 Vercel
 
-https://swiftbyte-api.vercel.app
-
----
-
-## Database
+### Database
 
 MongoDB Atlas
 
 ---
 
-# 💡 Engineering Highlights
+##  Future Improvements
 
-- Developed **7+ REST API endpoints**
-- Implemented JWT Authentication
-- Implemented bcrypt Password Hashing
-- Designed MongoDB Schemas using Mongoose
-- Built Password-Protected Links
-- Built QR Code Generation
-- Built Click Analytics
-- Configured Environment Variables
-- Deployed Frontend & Backend on Vercel
-- Integrated MongoDB Atlas Cloud Database
-- Resolved CORS and Production Deployment Challenges
-
----
-
-# 🔮 Future Improvements
-
+- Link Expiration
+- Custom Domains
+- Device Analytics
+- Geographic Analytics
 - Email Verification
 - Password Reset
-- Link Expiration
-- Device & Browser Analytics
-- Geographic Analytics
 - Download QR Code
 - Dark Mode
-- Custom Domains
 - Docker Support
-- GitHub Actions CI/CD
+- CI/CD Pipeline
 
 ---
 
-# 👨‍💻 Author
+##  Author
 
-## Abhinay Bhuvanesh Thota
+**Abhinay Bhuvanesh Thota**
 
-GitHub
-
-https://github.com/abhinaybhuvanesh
-
-LinkedIn
+LinkedIn:
 
 https://linkedin.com/in/abhinaybhuvanesh
 
+GitHub:
+
+https://github.com/abhinaybhuvanesh
+
 ---
 
-<div align="center">
-
-⭐ If you found this project useful, consider giving it a star.
-
-Built with ❤️ using React.js, Node.js, Express.js, MongoDB Atlas, JWT, and Vercel.
-
-</div>
+⭐ If you found this project useful, consider giving it a Star!
