@@ -177,23 +177,6 @@ url-platform/
 | GET | `/api/urls/:shortCode/qrcode` | Generate QR Code |
 | GET | `/api/urls/my-links` | Retrieve User URLs |
 
----
-
-## Production Deployment
-
-### Frontend
-
-Vercel
-
-https://swiftbyte-url.vercel.app
-
-### Backend
-
-Vercel
-
-### Database
-
-MongoDB Atlas
 
 ---
 
