@@ -1,410 +1,320 @@
 <div align="center">
 
-# SwiftByte
+# 🚀 SwiftByte
 
 ### Full-Stack URL Shortening and Analytics Platform
 
-A secure and scalable link-management application featuring custom short URLs, password-protected links, QR codes, click analytics, Redis caching, and JWT authentication.
+A modern URL shortening platform with secure authentication, custom aliases, password-protected links, QR code generation, click analytics, and cloud deployment.
 
-<br />
+<br>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Open_SwiftByte-0d9488?style=for-the-badge&logo=googlechrome&logoColor=white)](http://40.192.24.115)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-SwiftByte-0d9488?style=for-the-badge&logo=googlechrome&logoColor=white)](https://swiftbyte-url.vercel.app)
+
 [![GitHub](https://img.shields.io/badge/Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abhinaybhuvanesh/url-platform)
-
-<br />
-
-![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
-![AWS EC2](https://img.shields.io/badge/AWS_EC2-FF9900?style=flat-square&logo=amazonaws&logoColor=white)
-![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
-![PM2](https://img.shields.io/badge/PM2-2B037A?style=flat-square&logo=pm2&logoColor=white)
 
 </div>
 
 ---
 
-## Live Demo
+# 🌐 Live Demo
 
-**Application:** [http://40.192.24.115](http://40.192.24.115)
+**Application**
 
-> The application is hosted on a personal AWS EC2 instance. The server may be stopped when it is not being actively demonstrated. If the live demo is unavailable, please contact me and I will restart the instance.
-
----
-
-## Overview
-
-SwiftByte is a full-stack URL shortening and link-management platform built to demonstrate practical backend engineering, caching, authentication, API development, and cloud deployment.
-
-Users can shorten URLs without creating an account. Authentication unlocks additional functionality such as custom aliases, link ownership, password-protected links, QR codes, dashboards, and click analytics.
-
-The application is self-hosted on an AWS EC2 Ubuntu instance. Nginx serves the compiled React frontend, PM2 manages the Node.js backend, MongoDB Atlas stores application data, and Redis supports caching and rate limiting.
+https://swiftbyte-url.vercel.app
 
 ---
 
-## Key Features
+# 📌 Overview
 
-| Feature | Description |
-|---|---|
-| URL Shortening | Convert long URLs into compact and shareable links |
-| JWT Authentication | Secure registration and login using JWT and bcrypt |
-| Custom Aliases | Authenticated users can choose memorable short codes |
-| Password Protection | Protect selected links with bcrypt-hashed passwords |
-| Click Analytics | Track click counts and view link activity |
-| User Dashboard | Manage links associated with the authenticated account |
-| QR Code Generation | Generate a scannable QR code for every short URL |
-| Redis Caching | Cache redirect lookups to reduce database requests |
-| Rate Limiting | Protect link-creation endpoints from excessive requests |
-| Input Validation | Validate user input before processing API requests |
-| Error Handling | Centralized Express error-handling middleware |
-| Structured Logging | Application logging powered by Winston |
-| Cloud Deployment | Manually deployed using AWS EC2, Nginx, and PM2 |
+SwiftByte is a full-stack URL shortening platform built using **React.js, Node.js, Express.js, and MongoDB Atlas**.
+
+The platform allows users to shorten long URLs, create custom aliases, generate QR codes, secure links with passwords, manage their links through a dashboard, and monitor click analytics.
+
+The application is fully deployed on **Vercel**, while **MongoDB Atlas** is used for persistent cloud database storage.
 
 ---
 
-## System Architecture
+# ✨ Features
 
-```text
-                         ┌──────────────────┐
-                         │   React Client   │
-                         │   Single-Page    │
-                         │   Application    │
-                         └────────┬─────────┘
-                                  │
-                                  │ HTTP / Axios
-                                  ▼
-                         ┌──────────────────┐
-                         │      Nginx       │
-                         │ Static Frontend  │
-                         │ and Web Routing  │
-                         └────────┬─────────┘
-                                  │
-                                  ▼
-                         ┌──────────────────┐
-                         │ Express.js API   │
-                         │ Managed by PM2   │
-                         └───────┬──────────┘
-                                 │
-                    ┌────────────┴────────────┐
-                    │                         │
-                    ▼                         ▼
-          ┌──────────────────┐      ┌──────────────────┐
-          │      Redis       │      │  MongoDB Atlas   │
-          │                  │      │                  │
-          │ Redirect Cache   │      │ Users            │
-          │ Rate Limiting    │      │ URLs             │
-          │ Temporary State  │      │ Click Data       │
-          └──────────────────┘      └──────────────────┘
+- 🔗 URL Shortening
+- 👤 User Registration & Login
+- 🔐 JWT Authentication
+- 🔑 Password-Protected Links
+- ✏️ Custom URL Aliases
+- 📱 QR Code Generation
+- 📊 Click Analytics
+- 📂 Personal Dashboard
+- ✅ Input Validation
+- 🛡️ Password Hashing using bcrypt
+- ⚡ REST API Architecture
+- ☁️ Cloud Deployment on Vercel
+
+---
+
+# 🏗️ System Architecture
+
+```
+React Frontend
+        │
+        ▼
+ Vercel Frontend
+        │
+ Axios REST API
+        │
+        ▼
+Express.js Backend
+      (Vercel)
+        │
+        ▼
+MongoDB Atlas
 ```
 
 ---
 
-## Redirect Workflow
+# 🛠️ Tech Stack
 
-```text
-GET /:shortCode
-       │
-       ▼
-Check Redis cache
-       │
-       ├── Cache hit
-       │      ├── Redirect immediately
-       │      └── Update click count asynchronously
-       │
-       └── Cache miss
-              ├── Query MongoDB
-              ├── Cache the URL data in Redis
-              ├── Update click analytics
-              └── Redirect to the original URL
-```
+## Frontend
 
-Using a cache-aside strategy keeps frequently accessed redirects fast and reduces repeated database lookups.
-
----
-
-## Technology Stack
-
-### Frontend
-
-- React
+- React.js
 - React Router
 - Axios
+- HTML
+- CSS
 - JavaScript
-- Custom CSS
 
-### Backend
+## Backend
 
 - Node.js
 - Express.js
 - REST APIs
 
-### Database and Cache
+## Database
 
 - MongoDB Atlas
 - Mongoose
-- Redis
 
-### Authentication and Security
+## Authentication & Security
 
-- JSON Web Tokens
-- bcryptjs
-- rate-limiter-flexible
-- validator
-- Centralized error handling
+- JSON Web Token (JWT)
+- bcrypt
+- Input Validation
+- Password-Protected Links
 
-### Infrastructure
+## Deployment
 
-- AWS EC2
-- Ubuntu Server
-- Nginx
-- PM2
-- Git and GitHub
+- Vercel
+- MongoDB Atlas
+- GitHub
 
 ---
 
-## API Reference
+# 📡 REST API Endpoints
 
-| Method | Endpoint | Description | Authentication |
-|:---:|---|---|:---:|
-| `POST` | `/api/auth/register` | Create a new user account | No |
-| `POST` | `/api/auth/login` | Authenticate a user and return a JWT | No |
-| `POST` | `/api/urls` | Create a shortened URL | Optional |
-| `GET` | `/:shortCode` | Redirect to the original URL | No |
-| `POST` | `/api/urls/:shortCode/unlock` | Verify a protected link password | No |
-| `GET` | `/api/urls/:shortCode/qrcode` | Generate or retrieve a QR code | No |
-| `GET` | `/api/urls/my-links` | Retrieve links owned by the current user | Yes |
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /api/auth/register | Register User |
+| POST | /api/auth/login | Login User |
+| POST | /api/urls | Create Short URL |
+| GET | /:shortCode | Redirect to Original URL |
+| POST | /api/urls/:shortCode/unlock | Unlock Password Protected Link |
+| GET | /api/urls/:shortCode/qrcode | Generate QR Code |
+| GET | /api/urls/my-links | Retrieve User URLs |
 
+---
 
-## Local Development
+# 🔒 Security Features
 
-### Prerequisites
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected API Routes
+- Input Validation
+- Password-Protected URLs
 
-Before running the project locally, install:
+---
 
-- Node.js 18 or later
-- npm
-- Redis
-- MongoDB Atlas account or a local MongoDB server
+# 📊 Key Functionalities
 
-### 1. Clone the repository
+### URL Shortening
+
+Convert long URLs into short and shareable links.
+
+### Custom Alias
+
+Create personalized short URLs.
+
+Example:
+
+```
+https://swiftbyte-url.vercel.app/github
+```
+
+---
+
+### Password Protection
+
+Protect shortened URLs with a password.
+
+---
+
+### QR Code
+
+Generate a QR code for every shortened URL.
+
+---
+
+### Click Analytics
+
+Track the number of clicks for every shortened URL.
+
+---
+
+### Dashboard
+
+Authenticated users can:
+
+- View all their URLs
+- Monitor click counts
+- Manage created links
+
+---
+
+# ⚙️ Local Setup
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/abhinaybhuvanesh/url-platform.git
+
 cd url-platform
 ```
 
-### 2. Configure the backend
+---
+
+## Backend
 
 ```bash
 cd backend
+
 npm install
 ```
 
-Create a `.env` file inside the `backend` directory:
+Create `.env`
 
 ```env
 PORT=3000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secure_jwt_secret
-BASE_URL=http://localhost:3000
-FRONTEND_URL=http://localhost:3001
 
-REDIS_HOST=127.0.0.1
-REDIS_PORT=6379
+MONGODB_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret
+
+BASE_URL=http://localhost:3000
+
+FRONTEND_URL=http://localhost:3001
 ```
 
-Start the backend:
+Run backend
 
 ```bash
 node index.js
 ```
 
-The API should now be available at:
+---
 
-```text
-http://localhost:3000
-```
-
-### 3. Configure the frontend
-
-Open another terminal:
+## Frontend
 
 ```bash
 cd frontend
+
 npm install
 ```
 
-Create a `.env` file inside the `frontend` directory:
+Create `.env`
 
 ```env
 REACT_APP_API_URL=http://localhost:3000
 ```
 
-Start the React development server:
+Run frontend
 
 ```bash
 npm start
 ```
 
-The frontend should now be available at:
+---
 
-```text
-http://localhost:3001
-```
+# 🚀 Production Deployment
 
-> Depending on available ports, Create React App may use port `3000` or request permission to use another port.
+## Frontend
+
+Vercel
+
+https://swiftbyte-url.vercel.app
 
 ---
 
-## Production Build
+## Backend
 
-Create an optimized React build:
+Vercel
 
-```bash
-cd frontend
-npm run build
-```
-
-The generated production files will be available inside:
-
-```text
-frontend/build
-```
+https://swiftbyte-api.vercel.app
 
 ---
 
-## AWS Deployment
+## Database
 
-SwiftByte is manually deployed on an AWS EC2 Ubuntu instance.
-
-### Deployment components
-
-- **Nginx** serves the optimized React production build
-- **PM2** keeps the Express backend running in the background
-- **MongoDB Atlas** stores users, URLs, and analytics data
-- **Redis** runs on the EC2 instance for caching and rate limiting
-- **AWS Security Groups** control access to SSH, HTTP, HTTPS, and backend ports
-
-### Frontend deployment
-
-```bash
-cd ~/url-platform/frontend
-npm run build
-
-sudo rm -rf /var/www/swiftbyte/*
-sudo cp -r build/* /var/www/swiftbyte/
-
-sudo nginx -t
-sudo systemctl restart nginx
-```
-
-### Backend deployment
-
-```bash
-cd ~/url-platform/backend
-npm install
-
-pm2 start index.js --name swiftbyte-backend
-pm2 save
-```
-
-### Nginx configuration
-
-```nginx
-server {
-    listen 80;
-    server_name _;
-
-    root /var/www/swiftbyte;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
+MongoDB Atlas
 
 ---
 
-## Environment Variable Security
+# 💡 Engineering Highlights
 
-Sensitive environment variables must never be committed to GitHub.
-
-The following files should remain in `.gitignore`:
-
-```gitignore
-.env
-backend/.env
-frontend/.env
-node_modules/
-frontend/build/
-logs/
-*.log
-```
-
-Use an `.env.example` file to document required variables without exposing real credentials.
+- Developed **7+ REST API endpoints**
+- Implemented JWT Authentication
+- Implemented bcrypt Password Hashing
+- Designed MongoDB Schemas using Mongoose
+- Built Password-Protected Links
+- Built QR Code Generation
+- Built Click Analytics
+- Configured Environment Variables
+- Deployed Frontend & Backend on Vercel
+- Integrated MongoDB Atlas Cloud Database
+- Resolved CORS and Production Deployment Challenges
 
 ---
 
-## Current Limitations
+# 🔮 Future Improvements
 
-- The live deployment currently uses an EC2 public IP instead of a custom domain
-- HTTPS has not yet been configured
-- The public IP may change if the EC2 instance is stopped and restarted
-- The live server may be stopped when it is not being demonstrated
-
----
-
-## Roadmap
-
-- [ ] Configure a permanent Elastic IP
-- [ ] Add a custom domain
-- [ ] Enable HTTPS with Let's Encrypt
-- [ ] Add link expiration dates
-- [ ] Add browser, device, and geographic analytics
-- [ ] Add email verification and password recovery
-- [ ] Move authentication from `localStorage` to secure HTTP-only cookies
-- [ ] Add automated tests
-- [ ] Add Docker support
-- [ ] Configure CI/CD using GitHub Actions
+- Email Verification
+- Password Reset
+- Link Expiration
+- Device & Browser Analytics
+- Geographic Analytics
+- Download QR Code
+- Dark Mode
+- Custom Domains
+- Docker Support
+- GitHub Actions CI/CD
 
 ---
 
-## Engineering Highlights
+# 👨‍💻 Author
 
-This project demonstrates experience with:
+## Abhinay Bhuvanesh Thota
 
-- Designing RESTful APIs
-- Building JWT-based authentication
-- Hashing passwords securely with bcrypt
-- Applying Redis cache-aside patterns
-- Implementing API rate limiting
-- Designing MongoDB schemas using Mongoose
-- Building responsive React interfaces
-- Managing Node.js applications using PM2
-- Configuring Nginx for single-page applications
-- Deploying and managing applications on AWS EC2
-- Debugging Linux permissions, ports, processes, and deployment configurations
+GitHub
+
+https://github.com/abhinaybhuvanesh
+
+LinkedIn
+
+https://linkedin.com/in/abhinaybhuvanesh
 
 ---
-
-## Author
-
-### Abhinay Bhuvanesh Thota
-
-[![GitHub](https://img.shields.io/badge/GitHub-abhinay_bhuvanesh-181717?style=for-the-badge&logo=github)](https://github.com/abhinaybhuvanesh)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abhinay_Bhuvanesh-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/abhinaybhuvanesh/)
-
----
-
-## Support
-
-If you found this project useful or interesting, consider giving the repository a star.
 
 <div align="center">
 
-**Built with React, Node.js, MongoDB, Redis, Nginx, and AWS EC2.**
+⭐ If you found this project useful, consider giving it a star.
+
+Built with ❤️ using React.js, Node.js, Express.js, MongoDB Atlas, JWT, and Vercel.
 
 </div>
