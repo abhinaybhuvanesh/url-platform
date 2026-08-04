@@ -199,13 +199,9 @@ url-platform/
 
 **Abhinay Bhuvanesh Thota**
 
-LinkedIn:
+LinkedIn: https://linkedin.com/in/abhinaybhuvanesh
 
-https://linkedin.com/in/abhinaybhuvanesh
-
-GitHub:
-
-https://github.com/abhinaybhuvanesh
+GitHub: https://github.com/abhinaybhuvanesh
 
 ---
 
