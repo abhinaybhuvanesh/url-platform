@@ -6,14 +6,6 @@
 
 A modern URL shortening platform with secure authentication, custom aliases, password-protected links, QR code generation, click analytics, and cloud deployment.
 
-<br>
-
-[![Live Demo](https://img.shields.io/badge/Live_Demo-SwiftByte-0d9488?style=for-the-badge&logo=googlechrome&logoColor=white)](https://swiftbyte-url.vercel.app)
-
-[![GitHub](https://img.shields.io/badge/Source_Code-GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/abhinaybhuvanesh/url-platform)
-
-</div>
-
 ---
 
 # 🌐 Live Demo
